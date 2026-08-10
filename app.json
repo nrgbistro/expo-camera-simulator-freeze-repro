@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Expo Camera Simulator Freeze",
+    "slug": "expo-camera-simulator-freeze-repro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.expo.camerasimulatorfreezerepro"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow this app to reproduce the Simulator camera issue."
+        }
+      ]
+    ]
+  }
+}
