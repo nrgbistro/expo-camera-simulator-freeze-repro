@@ -120,6 +120,12 @@ Add this script to `package.json` before `ios`:
 "build": "expo export --platform ios --output-dir dist"
 ```
 
+Update the `start` script so Expo preserves the self-contained TypeScript configuration:
+
+```json
+"start": "EXPO_NO_TYPESCRIPT_SETUP=1 expo start"
+```
+
 - [ ] **Step 3: Create the Moon workspace and project task configuration**
 
 Create `.moon/workspace.yaml`:
@@ -134,15 +140,26 @@ Create `moon.yaml`:
 ```yaml
 language: 'typescript'
 
+fileGroups:
+  sources:
+    - 'App.tsx'
+    - 'app.json'
+    - 'index.ts'
+    - 'package.json'
+    - 'pnpm-lock.yaml'
+    - 'tsconfig.json'
+
 tasks:
   build:
     command: 'pnpm'
     args: ['run', 'build']
+    inputs: ['@group(sources)']
     outputs: ['dist']
 
   dev:
     command: 'pnpm'
     args: ['run', 'start']
+    inputs: ['@group(sources)']
     preset: 'server'
     options:
       cache: false
@@ -151,6 +168,7 @@ tasks:
   typecheck:
     command: 'pnpm'
     args: ['run', 'typecheck']
+    inputs: ['@group(sources)']
 ```
 
 Add `.moon/cache/` to `.gitignore` so Moon's generated schemas and cache remain local.

@@ -1,0 +1,31 @@
+language: 'typescript'
+
+fileGroups:
+  sources:
+    - 'App.tsx'
+    - 'app.json'
+    - 'index.ts'
+    - 'package.json'
+    - 'pnpm-lock.yaml'
+    - 'tsconfig.json'
+
+tasks:
+  build:
+    command: 'pnpm'
+    args: ['run', 'build']
+    inputs: ['@group(sources)']
+    outputs: ['dist']
+
+  dev:
+    command: 'pnpm'
+    args: ['run', 'start']
+    inputs: ['@group(sources)']
+    preset: 'server'
+    options:
+      cache: false
+      interactive: true
+
+  typecheck:
+    command: 'pnpm'
+    args: ['run', 'typecheck']
+    inputs: ['@group(sources)']

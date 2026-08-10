@@ -13,7 +13,7 @@ Pin Moon 2.3.4 in `.prototools`. Add `.moon/workspace.yaml` with the repository 
 The package scripts remain the command source of truth:
 
 - `build` exports a production iOS bundle to `dist/`.
-- `start` runs the Expo development server.
+- `start` runs the Expo development server with `EXPO_NO_TYPESCRIPT_SETUP=1` so Expo does not restore the package-based `extends` entry.
 - `typecheck` runs TypeScript without emitting files.
 
 Moon delegates to those scripts, so the equivalent commands are `moon run app:build`, `moon run app:dev`, and `moon run app:typecheck`. The `dev` task is an interactive server task and is not cached. The `build` task declares `dist/` as its output.

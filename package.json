@@ -4,7 +4,8 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
-    "start": "expo start",
+    "build": "expo export --platform ios --output-dir dist",
+    "start": "EXPO_NO_TYPESCRIPT_SETUP=1 expo start",
     "ios": "expo run:ios",
     "typecheck": "tsc --noEmit"
   },

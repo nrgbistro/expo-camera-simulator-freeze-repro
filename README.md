@@ -30,6 +30,18 @@ Actual: the Simulator UI can freeze for roughly 9–15 seconds, commonly around 
 
 The **Cancel** button provides a control path that dismisses the same `CameraView` without adding an image to state. In automated validation, the primary three-save flow reproduced the freeze. A more aggressive five-cycle Cancel-only run also left the fifth modal stuck. This indicates that saving is a reproducibility amplifier, not the native root cause; rapid failed session startup and teardown is sufficient on its own.
 
+## Moon commands
+
+The repository pins Moon through Proto. From the repository root:
+
+```sh
+moon run app:build
+moon run app:dev
+moon run app:typecheck
+```
+
+`app:build` writes a production iOS export to `dist/`. `app:dev` starts the interactive Expo development server.
+
 ## Focused Simulator logs
 
 One three-save run produced the following sequence. Each new session fails immediately, then its session-start work times out roughly nine seconds later:

@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.moon/cache/
 dist/
 web-build/
 ios/

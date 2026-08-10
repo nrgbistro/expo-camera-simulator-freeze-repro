@@ -1,5 +1,6 @@
 node = "22.18.0"
 pnpm = "11.9.0"
+moon = "2.3.4"
 
 [settings]
 auto-install = true
