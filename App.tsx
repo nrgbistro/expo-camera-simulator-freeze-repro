@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import {
-  Button,
   Image,
   Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -17,6 +17,39 @@ const PLACEHOLDER_BASE64 =
   'AAD/2gAIAQEAAD8AGX//2Q=='
 
 const PLACEHOLDER_URI = `data:image/jpeg;base64,${PLACEHOLDER_BASE64}`
+
+type ActionButtonProps = {
+  label: string
+  onPress: () => void
+  variant?: 'primary' | 'secondary'
+}
+
+function ActionButton({
+  label,
+  onPress,
+  variant = 'primary',
+}: ActionButtonProps) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.actionButton,
+        variant === 'secondary' && styles.secondaryButton,
+        pressed && styles.actionButtonPressed,
+      ]}
+    >
+      <Text
+        style={[
+          styles.actionButtonText,
+          variant === 'secondary' && styles.secondaryButtonText,
+        ]}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  )
+}
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions()
@@ -38,7 +71,10 @@ export default function App() {
         <Text style={styles.permissionText}>
           Camera permission is required to mount CameraView.
         </Text>
-        <Button title="Grant Camera Permission" onPress={requestPermission} />
+        <ActionButton
+          label="Grant Camera Permission"
+          onPress={requestPermission}
+        />
       </View>
     )
   }
@@ -48,9 +84,8 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.title}>Saved photos: {photos.length}</Text>
         <Text style={styles.instructions}>
-          Open the camera and save a placeholder three times quickly.
+          Open the camera and save a placeholder repeatedly.
         </Text>
-        <Button title="Open Camera" onPress={() => setIsCameraOpen(true)} />
       </View>
 
       <ScrollView contentContainerStyle={styles.photos}>
@@ -64,6 +99,13 @@ export default function App() {
         ))}
       </ScrollView>
 
+      <View style={styles.primaryAction}>
+        <ActionButton
+          label="Open Camera"
+          onPress={() => setIsCameraOpen(true)}
+        />
+      </View>
+
       {isCameraOpen && (
         <Modal
           visible
@@ -73,16 +115,17 @@ export default function App() {
         >
           <View style={styles.cameraScreen}>
             <CameraView style={StyleSheet.absoluteFill} facing="back" />
-            <View style={styles.cameraActions}>
-              <Button
-                title="Save Placeholder"
+            <View style={styles.primaryAction}>
+              <ActionButton
+                label="Save Placeholder"
                 onPress={savePlaceholder}
-                color="#ffffff"
               />
-              <Button
-                title="Cancel"
+            </View>
+            <View style={styles.secondaryAction}>
+              <ActionButton
+                label="Cancel"
                 onPress={() => setIsCameraOpen(false)}
-                color="#ffffff"
+                variant="secondary"
               />
             </View>
           </View>
@@ -96,6 +139,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: '#f4f4f5',
+    paddingTop: 72,
+    paddingHorizontal: 24,
   },
   centered: {
     flex: 1,
@@ -110,7 +155,6 @@ const styles = StyleSheet.create({
   },
   header: {
     gap: 12,
-    padding: 24,
   },
   title: {
     fontSize: 24,
@@ -124,7 +168,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
-    padding: 24,
+    paddingTop: 24,
+    paddingBottom: 220,
   },
   thumbnail: {
     width: 96,
@@ -136,13 +181,40 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  cameraActions: {
+  primaryAction: {
     position: 'absolute',
-    right: 0,
-    bottom: 24,
-    left: 0,
-    gap: 12,
-    padding: 24,
+    right: 24,
+    bottom: 112,
+    left: 24,
+    alignItems: 'center',
+  },
+  secondaryAction: {
+    position: 'absolute',
+    right: 24,
+    bottom: 48,
+    left: 24,
+    alignItems: 'center',
+  },
+  actionButton: {
+    width: 240,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 14,
+    backgroundColor: '#0a84ff',
+  },
+  actionButtonPressed: {
+    opacity: 0.72,
+  },
+  actionButtonText: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: '600',
+  },
+  secondaryButton: {
     backgroundColor: 'rgba(0, 0, 0, 0.55)',
+  },
+  secondaryButtonText: {
+    color: '#ffffff',
   },
 })
