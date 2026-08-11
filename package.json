@@ -1,22 +1,22 @@
 {
-  "name": "expo-camera-simulator-freeze-repro",
-  "version": "1.0.0",
-  "private": true,
-  "main": "index.ts",
-  "scripts": {
-    "build": "expo export --platform ios --output-dir dist",
-    "start": "EXPO_NO_TYPESCRIPT_SETUP=1 expo start",
-    "ios": "expo run:ios",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "expo": "57.0.9",
-    "expo-camera": "57.0.3",
-    "react": "19.2.3",
-    "react-native": "0.86.2"
-  },
-  "devDependencies": {
-    "@types/react": "19.2.14",
-    "typescript": "6.0.3"
-  }
+	"name": "expo-camera-simulator-freeze-repro",
+	"version": "1.0.0",
+	"private": true,
+	"main": "index.ts",
+	"scripts": {
+		"build": "expo export --platform ios --output-dir dist",
+		"start": "EXPO_NO_TYPESCRIPT_SETUP=1 expo start",
+		"ios": "expo run:ios",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"expo": "57.0.12",
+		"expo-camera": "57.0.3",
+		"react": "19.2.3",
+		"react-native": "0.86.2"
+	},
+	"devDependencies": {
+		"@types/react": "19.2.14",
+		"typescript": "6.0.3"
+	}
 }
