@@ -3,6 +3,7 @@ node_modules/
 .moon/cache/
 dist/
 web-build/
+docs/
 ios/
 android/
 *.log
