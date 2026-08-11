@@ -24,6 +24,8 @@ The Expo version is intentionally pinned to the affected version instead of the 
 5. Tap **Open Camera**, then **Save Placeholder**.
 6. Repeat step 5 three times quickly.
 
+The two primary buttons intentionally occupy the same screen coordinate, so the open/save cycle can be repeated without moving the pointer.
+
 Expected: each modal dismisses immediately and the main UI stays responsive.
 
 Actual: the Simulator UI can freeze for roughly 9–15 seconds, commonly around the third saved image. The delay can begin before the modal finishes dismissing or immediately afterward.
@@ -67,5 +69,7 @@ xcrun simctl spawn booted log show --last 3m --style compact --info --debug \
 ```
 
 The log sequence is consistent with overlapping failed Simulator camera-session startups and teardown waiting for those pending starts, rather than time spent capturing or persisting the placeholder image.
+
+A refreshed six-cycle run on the same booted Simulator completed four saves before blocking on the fifth. Each rapidly created session again reported `-12782` and `-11800`, followed by the same staggered nine-second `_buildAndRunGraph` timeouts.
 
 Potentially related upstream change: [expo/expo#44159](https://github.com/expo/expo/pull/44159).
